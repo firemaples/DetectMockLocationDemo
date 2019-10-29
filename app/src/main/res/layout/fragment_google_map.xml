@@ -39,6 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="4dp"
+        android:background="#DDFFFFFF"
         app:layout_constraintBottom_toBottomOf="@id/tv_locationReal"
         app:layout_constraintEnd_toStartOf="@id/tv_locationReal"
         app:layout_constraintTop_toTopOf="@id/tv_locationReal"

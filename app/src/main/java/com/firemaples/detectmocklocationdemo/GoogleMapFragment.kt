@@ -30,7 +30,7 @@ class GoogleMapFragment : Fragment() {
             requireActivity()
         )
     }
-    private var lastLocation: Location? = null
+    //    private var lastLocation: Location? = null
     private var map: GoogleMap? = null
     private var marker: Marker? = null
     private val dateFormatter = SimpleDateFormat("HH:mm:ss", Locale.US)
@@ -98,8 +98,8 @@ class GoogleMapFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     private fun updateLastLocation(location: Location?) {
         if (location == null) return
-        this.lastLocation = location
-        Logger.info("Get location update: $location")
+//        this.lastLocation = location
+        Logger.info("Get Google location update: $location")
 
         val map = this.map
         val marker = this.marker
