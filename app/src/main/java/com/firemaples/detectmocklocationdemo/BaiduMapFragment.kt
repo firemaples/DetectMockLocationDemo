@@ -16,10 +16,11 @@ import com.baidu.mapapi.map.Marker
 import com.baidu.mapapi.map.MarkerOptions
 import com.baidu.mapapi.model.LatLng
 import kotlinx.android.synthetic.main.fragment_baidu_map.*
+import kotlinx.android.synthetic.main.view_info.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class BaiduMapFragment : Fragment() {
+class BaiduMapFragment : BaseMapFragment() {
     private val locationClient by lazy {
         LocationClient(requireActivity().applicationContext, LocationClientOption().apply {
             isOpenGps = true
@@ -31,7 +32,6 @@ class BaiduMapFragment : Fragment() {
     private val mapView by lazy { baiduMap }
     private val map by lazy { mapView.map }
     private var marker: Marker? = null
-    private val dateFormatter = SimpleDateFormat("HH:mm:ss", Locale.US)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -91,8 +91,6 @@ class BaiduMapFragment : Fragment() {
             map.animateMapStatus(MapStatusUpdateFactory.newLatLngZoom(latLng, 17f))
         }
 
-        val info =
-            "${location.latitude}, ${location.longitude}, ${dateFormatter.format(System.currentTimeMillis())}"
-        tv_locationInfo.text = info
+        updateLocationInfo(location.latitude, location.longitude, System.currentTimeMillis())
     }
 }

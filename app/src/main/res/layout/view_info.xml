@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:showIn="@layout/fragment_google_map">
+
+    <TextView
+        android:id="@+id/tv_locationReal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#0F0"
+        android:padding="4dp"
+        android:text="Real"
+        android:textColor="#FFF"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_locationFake"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#F00"
+        android:padding="4dp"
+        android:text="Mocked"
+        android:textColor="#FFF"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="start"
+        app:constraint_referenced_ids="tv_locationFake,tv_locationReal" />
+
+    <TextView
+        android:id="@+id/tv_locationInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:background="#DDFFFFFF"
+        android:gravity="center_vertical"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"
+        app:layout_constraintBottom_toBottomOf="@id/tv_locationReal"
+        app:layout_constraintEnd_toStartOf="@id/barrier"
+        app:layout_constraintTop_toTopOf="@id/tv_locationReal"
+        tools:text="00.000000, 00.000000, 23:50:59 (000)" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

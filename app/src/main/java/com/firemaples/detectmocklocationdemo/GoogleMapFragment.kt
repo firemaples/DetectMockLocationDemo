@@ -21,19 +21,18 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.fragment_google_map.*
+import kotlinx.android.synthetic.main.view_info.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class GoogleMapFragment : Fragment() {
+class GoogleMapFragment : BaseMapFragment() {
     private val locationClient by lazy {
         LocationServices.getFusedLocationProviderClient(
             requireActivity()
         )
     }
-    //    private var lastLocation: Location? = null
     private var map: GoogleMap? = null
     private var marker: Marker? = null
-    private val dateFormatter = SimpleDateFormat("HH:mm:ss", Locale.US)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -67,10 +66,6 @@ class GoogleMapFragment : Fragment() {
         locationClient.removeLocationUpdates(locationCallback)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-    }
-
     private fun setViews() {
         val mapFragment = SupportMapFragment.newInstance()
         childFragmentManager.beginTransaction()
@@ -79,9 +74,6 @@ class GoogleMapFragment : Fragment() {
         mapFragment.getMapAsync {
             onMapReady(it)
         }
-//        (fragmentManager?.findFragmentById(R.id.map) as SupportMapFragment?)?.getMapAsync {
-//            onMapReady(it)
-//        }
     }
 
     private fun onMapReady(map: GoogleMap) {
@@ -95,10 +87,8 @@ class GoogleMapFragment : Fragment() {
         }
     }
 
-    @SuppressLint("SetTextI18n")
     private fun updateLastLocation(location: Location?) {
         if (location == null) return
-//        this.lastLocation = location
         Logger.info("Get Google location update: $location")
 
         val map = this.map
@@ -124,13 +114,8 @@ class GoogleMapFragment : Fragment() {
                 ) != "0"
             }
 
-        tv_locationReal.visibility =
-            if (mocked) View.INVISIBLE else View.VISIBLE
-        tv_locationFake.visibility =
-            if (mocked) View.VISIBLE else View.INVISIBLE
-
-        tv_locationInfo.text =
-            "${location.latitude}, ${location.longitude}, ${dateFormatter.format(location.time)}"
+        updateMockedStatus(mocked)
+        updateLocationInfo(location.latitude, location.longitude, location.time)
     }
 
     private fun Location.toLatLng(): LatLng = LatLng(this.latitude, this.longitude)
