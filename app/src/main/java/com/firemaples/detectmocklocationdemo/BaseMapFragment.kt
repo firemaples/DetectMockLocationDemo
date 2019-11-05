@@ -23,5 +23,9 @@ open class BaseMapFragment : Fragment() {
         tv_locationInfo.text = info
     }
 
+    protected fun updateErrorMsg(errorMsg: String?) {
+        tv_errorMsg.text = errorMsg
+    }
+
     private fun Number.toSixDigital(): String = "%.6f".format(Locale.US, this)
 }

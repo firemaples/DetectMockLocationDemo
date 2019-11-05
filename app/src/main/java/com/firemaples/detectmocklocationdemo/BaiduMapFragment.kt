@@ -73,13 +73,22 @@ class BaiduMapFragment : BaseMapFragment() {
         override fun onReceiveLocation(location: BDLocation?) {
             updateLastLocation(location)
         }
+
+        override fun onLocDiagnosticMessage(
+            locType: Int,
+            diagnosticType: Int,
+            diagnosticMessage: String?
+        ) {
+            Logger.warn("Diagnostic: locType: $locType, diagnosticType: $diagnosticType, diagnosticMessage: $diagnosticMessage")
+//            updateErrorMsg("error($locType), $diagnosticMessage($diagnosticType)")
+        }
     }
 
     @SuppressLint("SetTextI18n")
     private fun updateLastLocation(location: BDLocation?) {
         if (location == null) return
 
-        Logger.info("Get Baidu location update: ${location.latitude}, ${location.longitude}")
+        Logger.info("Get Baidu location update: (${location.latitude}, ${location.longitude}), locType:${location.locTypeDescription}(${location.locType})")
         val latLng = LatLng(location.latitude, location.longitude)
         val marker = this.marker
         if (marker == null) {
@@ -92,5 +101,13 @@ class BaiduMapFragment : BaseMapFragment() {
         }
 
         updateLocationInfo(location.latitude, location.longitude, System.currentTimeMillis())
+        if (location.isSuccess()) {
+            updateErrorMsg(null)
+        } else {
+            updateErrorMsg("${location.locTypeDescription}(${location.locType})")
+        }
     }
+
+    private val successLocTypes = arrayOf(61, 66, 161)
+    private fun BDLocation.isSuccess(): Boolean = successLocTypes.contains(this.locType)
 }
